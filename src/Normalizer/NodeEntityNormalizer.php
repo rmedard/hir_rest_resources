@@ -6,7 +6,7 @@
  * Time: 17:06
  */
 
-namespace Drupal\jir_rest_api\Normalizer;
+namespace Drupal\hir_rest_resources\Normalizer;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\serialization\Normalizer\ContentEntityNormalizer;
