@@ -1,0 +1,11 @@
+services:
+  jir_rest_api.normalizer.node_entity:
+    class: Drupal\hir_rest_resources\Normalizer\NodeEntityNormalizer
+    arguments: ['@entity.manager']
+    tags:
+      - { name: normalizer, priority: 8 }
+
+  jir_rest_api.normalizer.typed_data:
+    class: Drupal\hir_rest_resources\Normalizer\TypedDataNormalizer
+    tags:
+      - { name: normalizer, priority: 9 }
