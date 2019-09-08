@@ -24,7 +24,7 @@ class TypedDataNormalizer extends NormalizerBase
     {
         $value = $object->getValue();
         if (isset($value[0]) && isset($value[0]['value'])) {
-            \Drupal::logger('rest')->info($object);
+            \Drupal::logger('rest')->info(json_encode($object));
             $value = $value[0]['value'];
         }
         return $value;
