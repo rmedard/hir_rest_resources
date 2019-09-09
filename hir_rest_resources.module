@@ -1,5 +1,25 @@
 <?php
 /**
-* @file
-* A description of what your module does.
-*/
+ * @file
+ * A description of what your module does.
+ */
+
+use Doctrine\CouchDB\CouchDBClient;
+use Doctrine\CouchDB\HTTP\HTTPException as HTTPExceptionAlias;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\NodeInterface;
+
+/**
+ * Implements hook_entity_update().
+ */
+function hir_rest_resources_entity_update(EntityInterface $entity)
+{
+    if ($entity instanceof NodeInterface and $entity->bundle() == 'advert') {
+        $client = CouchDBClient::create(array('dbname' => 'hir'));
+        try {
+            $client->postDocument((array) $entity);
+        } catch (HTTPExceptionAlias $e) {
+            Drupal::logger('hir_rest_resources')->error(json_encode($e));
+        }
+    }
+}
