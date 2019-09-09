@@ -6,6 +6,7 @@
 
 use Doctrine\CouchDB\CouchDBClient;
 use Doctrine\CouchDB\HTTP\HTTPException as HTTPExceptionAlias;
+use Drupal\Core\Entity\Entity;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\node\NodeInterface;
 
@@ -18,7 +19,7 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
     if ($entity instanceof NodeInterface and $entity->bundle() == 'advert') {
         $client = CouchDBClient::create(array('dbname' => 'hir'));
         try {
-            $client->postDocument((array) $entity);
+            $client->postDocument($entity->toArray());
         } catch (HTTPExceptionAlias $e) {
             Drupal::logger('hir_rest_resources')->error(json_encode($e));
         }
