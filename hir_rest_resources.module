@@ -19,7 +19,7 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
     Drupal::logger('hir_rest_resources')->info($entity->bundle());
     if ($entity instanceof NodeInterface and $entity->bundle() == 'advert') {
         $client = CouchDBClient::create(array('dbname' => 'hir'));
-        $normalizer = Drupal::service('hir_rest_resources.normalizer.typed_data');
+        $normalizer = Drupal::service('hir_rest_resources.typed_data_normalizer');
         try {
             $entity->getTypedData()->getProperties(true);
             foreach ($entity->getTypedData()->getProperties(true) as $property) {
