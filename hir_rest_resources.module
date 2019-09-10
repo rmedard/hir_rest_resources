@@ -9,6 +9,7 @@ use Doctrine\CouchDB\HTTP\HTTPException as HTTPExceptionAlias;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\TypedData\TypedDataInterface;
+use Drupal\hir_rest_resources\Normalizer\TypedDataNormalizer;
 use Drupal\node\NodeInterface;
 
 /**
@@ -19,7 +20,7 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
     Drupal::logger('hir_rest_resources')->info($entity->bundle());
     if ($entity instanceof NodeInterface and $entity->bundle() == 'advert') {
         $client = CouchDBClient::create(array('dbname' => 'hir'));
-        $normalizer = Drupal::service('hir_rest_resources.typed_data_normalizer');
+        $normalizer = new TypedDataNormalizer();
         try {
             $entity->getTypedData()->getProperties(true);
             foreach ($entity->getTypedData()->getProperties(true) as $property) {
