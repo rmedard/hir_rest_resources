@@ -17,7 +17,6 @@ use Drupal\node\NodeInterface;
  */
 function hir_rest_resources_entity_update(EntityInterface $entity)
 {
-    Drupal::logger('hir_rest_resources')->info($entity->bundle());
     if ($entity instanceof NodeInterface and $entity->bundle() == 'advert') {
         $client = CouchDBClient::create(array('dbname' => 'hir'));
         $normalizer = new TypedDataNormalizer();
@@ -28,6 +27,7 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
                     $entity->set($property->getName(), $normalizer->normalize($property));
                 }
             }
+            Drupal::logger('hir_rest_resources')->info(json_encode($entity));
             $client->postDocument($entity->toArray());
         } catch (HTTPExceptionAlias $e) {
             Drupal::logger('hir_rest_resources')->error(json_encode($e));
