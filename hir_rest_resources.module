@@ -8,7 +8,7 @@ use Doctrine\CouchDB\CouchDBClient;
 use Doctrine\CouchDB\HTTP\HTTPException as HTTPExceptionAlias;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\TypedData\Exception\MissingDataException;
-use Drupal\hir_rest_resources\Normalizer\TypedDataNormalizer;
+use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\node\NodeInterface;
 
 /**
@@ -19,9 +19,15 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
     Drupal::logger('hir_rest_resources')->info($entity->bundle());
     if ($entity instanceof NodeInterface and $entity->bundle() == 'advert') {
         $client = CouchDBClient::create(array('dbname' => 'hir'));
+        $normalizer = Drupal::service('hir_rest_resources.normalizer.typed_data');
         try {
-            $normalized = (new TypedDataNormalizer())->normalize($entity->getTypedData()->toArray(), null, array());
-            $client->postDocument($normalized);
+            $entity->getTypedData()->getProperties(true);
+            foreach ($entity->getTypedData()->getProperties(true) as $property) {
+                if ($property instanceof TypedDataInterface) {
+                    $entity->getTypedData()->set($property->getName(), $normalizer->normalize($property, null, array()));
+                }
+            }
+            $client->postDocument($entity->toArray());
         } catch (HTTPExceptionAlias $e) {
             Drupal::logger('hir_rest_resources')->error(json_encode($e));
         } catch (MissingDataException $e) {
