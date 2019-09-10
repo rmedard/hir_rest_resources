@@ -22,13 +22,13 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
         $normalizer = new TypedDataNormalizer();
         try {
             $entity->getTypedData()->getProperties(true);
+            $normalized = array();
             foreach ($entity->getTypedData()->getProperties(true) as $property) {
                 if ($property instanceof TypedDataInterface) {
-                    $entity->set($property->getName(), $normalizer->normalize($property));
+                    $normalized[$property->getName()] = $normalizer->normalize($property);
                 }
             }
-            Drupal::logger('hir_rest_resources')->info(json_encode($entity));
-            $client->postDocument($entity->toArray());
+            $client->postDocument($normalized);
         } catch (HTTPExceptionAlias $e) {
             Drupal::logger('hir_rest_resources')->error(json_encode($e));
         } catch (MissingDataException $e) {
