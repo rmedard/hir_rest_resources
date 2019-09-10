@@ -28,7 +28,7 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
                     $entity->getTypedData()->set($property->getName(), $normalizer->normalize($property));
                 }
             }
-            $client->postDocument($entity->toArray());
+            $client->postDocument($entity->getTypedData()->toArray());
         } catch (HTTPExceptionAlias $e) {
             Drupal::logger('hir_rest_resources')->error(json_encode($e));
         } catch (MissingDataException $e) {
