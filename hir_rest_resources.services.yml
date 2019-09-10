@@ -7,5 +7,6 @@ services:
 
   hir_rest_resources.typed_data_normalizer:
     class: Drupal\hir_rest_resources\Normalizer\TypedDataNormalizer
+    public: true
     tags:
       - { name: normalizer, priority: 9 }

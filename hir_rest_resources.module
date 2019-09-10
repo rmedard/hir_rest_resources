@@ -24,7 +24,7 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
             $entity->getTypedData()->getProperties(true);
             foreach ($entity->getTypedData()->getProperties(true) as $property) {
                 if ($property instanceof TypedDataInterface) {
-                    $entity->getTypedData()->set($property->getName(), $normalizer->normalize($property, null, array()));
+                    $entity->getTypedData()->set($property->getName(), $normalizer->normalize($property));
                 }
             }
             $client->postDocument($entity->toArray());
