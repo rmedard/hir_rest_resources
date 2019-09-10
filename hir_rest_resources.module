@@ -25,10 +25,10 @@ function hir_rest_resources_entity_update(EntityInterface $entity)
             $entity->getTypedData()->getProperties(true);
             foreach ($entity->getTypedData()->getProperties(true) as $property) {
                 if ($property instanceof TypedDataInterface) {
-                    $entity->getTypedData()->set($property->getName(), $normalizer->normalize($property));
+                    $entity->set($property->getName(), $normalizer->normalize($property));
                 }
             }
-            $client->postDocument($entity->getTypedData()->toArray());
+            $client->postDocument($entity->toArray());
         } catch (HTTPExceptionAlias $e) {
             Drupal::logger('hir_rest_resources')->error(json_encode($e));
         } catch (MissingDataException $e) {
