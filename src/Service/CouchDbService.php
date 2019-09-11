@@ -9,7 +9,6 @@ use Doctrine\CouchDB\HTTP\HTTPException;
 use Drupal;
 use Drupal\Core\TypedData\Exception\MissingDataException;
 use Drupal\Core\TypedData\TypedDataInterface;
-use Drupal\hir_rest_resources\Normalizer\NodeEntityNormalizer;
 use Drupal\hir_rest_resources\Normalizer\TypedDataNormalizer;
 use Drupal\node\NodeInterface;
 

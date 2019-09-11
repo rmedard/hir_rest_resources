@@ -38,7 +38,7 @@ class NodeEntityNormalizer extends ContentEntityNormalizer
      */
     public function normalize($entity, $format = NULL, array $context = [])
     {
-        $attributes = parent::normalize($entity, $format, $context);
+        $attributes = parent::normalize($entity);
         $changed_timestamp = $entity->getChangedTime();
         $created_timestamp = $entity->getCreatedTime();
 
