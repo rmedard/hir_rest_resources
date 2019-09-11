@@ -1,7 +1,6 @@
 services:
   hir_rest_resources.node_entity_normalizer:
     class: Drupal\hir_rest_resources\Normalizer\NodeEntityNormalizer
-    arguments: ['@entity.manager']
     tags:
       - { name: normalizer, priority: 8 }
 
@@ -10,3 +9,6 @@ services:
     public: true
     tags:
       - { name: normalizer, priority: 9 }
+
+  hir_rest_resources.couchdb_service:
+    class: Drupal\hir_rest_resources\Service\CouchDbService

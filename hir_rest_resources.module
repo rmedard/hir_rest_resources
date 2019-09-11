@@ -4,34 +4,28 @@
  * A description of what your module does.
  */
 
-use Doctrine\CouchDB\CouchDBClient;
-use Doctrine\CouchDB\HTTP\HTTPException as HTTPExceptionAlias;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\TypedData\Exception\MissingDataException;
-use Drupal\Core\TypedData\TypedDataInterface;
-use Drupal\hir_rest_resources\Normalizer\TypedDataNormalizer;
 use Drupal\node\NodeInterface;
 
 /**
- * Implements hook_entity_update().
+ * Implements hook_entity_presave().
  */
-function hir_rest_resources_entity_update(EntityInterface $entity)
+function hir_rest_resources_entity_presave(EntityInterface $entity)
 {
     if ($entity instanceof NodeInterface and $entity->bundle() == 'advert') {
-        $client = CouchDBClient::create(array('dbname' => 'hir'));
-        $normalizer = new TypedDataNormalizer();
-        try {
-            $entity->getTypedData()->getProperties(true);
-            $normalized = array();
-            foreach ($entity->getTypedData()->getProperties(true) as $property) {
-                if ($property instanceof TypedDataInterface) {
-                    $normalized[$property->getName()] = $normalizer->normalize($property);
-                }
+        $couchDbService = Drupal::service('hir_rest_resources.couchdb_service');
+        $normalized = $couchDbService->normalizeEntity($entity);
+        if ($entity->isNew()) {
+            $id = $couchDbService->createEntity($normalized);
+            $entity->set('field_advert_couch_id', $id);
+        } else {
+            $couch_id = $entity->get('field_advert_couch_id')->value;
+            if (isset($couch_id)) {
+                $couchDbService->updateEntity($normalized, $couch_id);
+            } else {
+                $id = $couchDbService->createEntity($normalized);
+                $entity->set('field_advert_couch_id', $id);
             }
-            $client->postDocument($normalized);
-        } catch (HTTPExceptionAlias $e) {
-            Drupal::logger('hir_rest_resources')->error(json_encode($e));
-        } catch (MissingDataException $e) {
         }
     }
 }
