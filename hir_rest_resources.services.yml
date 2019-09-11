@@ -1,6 +1,7 @@
 services:
   hir_rest_resources.node_entity_normalizer:
     class: Drupal\hir_rest_resources\Normalizer\NodeEntityNormalizer
+    arguments: ['@entity.manager']
     tags:
       - { name: normalizer, priority: 8 }
 
