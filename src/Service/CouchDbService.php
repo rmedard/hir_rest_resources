@@ -42,7 +42,10 @@ class CouchDbService
 
     public function createEntity($entityArray) {
         try {
-            return $this->client->postDocument($entityArray)['id'];
+            $result = $this->client->postDocument($entityArray);
+            Drupal::logger('hir_rest_resources')->info(json_encode($result));
+            Drupal::logger('hir_rest_resources')->info($result['id']);
+            return $result['id'];
         } catch (HTTPException $e) {
             Drupal::logger('hir_rest_resources')->error("Create failed: " . $e->getMessage());
         }
