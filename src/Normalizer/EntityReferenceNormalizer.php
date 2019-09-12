@@ -4,7 +4,6 @@
 namespace Drupal\hir_rest_resources\Normalizer;
 
 
-use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\serialization\Normalizer\EntityReferenceFieldItemNormalizer;
 
 class EntityReferenceNormalizer extends EntityReferenceFieldItemNormalizer
