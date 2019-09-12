@@ -37,6 +37,7 @@ class CouchDbService
                 Drupal::logger('hir_rest_resources')->error("Missing data: " . $e->getMessage());
             }
         }
+        unset($normalized['field_advert_couch_id']); // No need to put couch id in the body
         return $normalized;
     }
 
