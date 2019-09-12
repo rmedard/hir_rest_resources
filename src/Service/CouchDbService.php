@@ -40,18 +40,24 @@ class CouchDbService
         return $normalized;
     }
 
+    /**
+     * @param $entityArray
+     * @return string couch db identifier|null
+     */
     public function createEntity($entityArray) {
         try {
-            $result = $this->client->postDocument($entityArray);
-            Drupal::logger('hir_rest_resources')->info('full: ' . json_encode($result));
-            Drupal::logger('hir_rest_resources')->info('id: ' . $result['id']);
-            return $result['id'];
+            // Because couch db id is return at position 0
+            return $this->client->postDocument($entityArray)[0];
         } catch (HTTPException $e) {
             Drupal::logger('hir_rest_resources')->error("Create failed: " . $e->getMessage());
         }
         return null;
     }
 
+    /**
+     * @param $entityArray
+     * @param $id
+     */
     public function updateEntity($entityArray, $id) {
         try {
             $this->client->putDocument($entityArray, $id);
