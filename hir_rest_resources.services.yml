@@ -12,6 +12,7 @@ services:
 
   hir_rest_resources.entity_reference_normalizer:
     class: Drupal\hir_rest_resources\Normalizer\EntityReferenceNormalizer
+    arguments: ['@entity.manager']
     tags:
       - { name: normalizer, priority: 10 }
 
