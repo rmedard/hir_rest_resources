@@ -23,7 +23,8 @@ function hir_rest_resources_entity_presave(EntityInterface $entity)
             $couch_id = $entity->get('field_advert_couch_id')->value;
             $couch_rev = $entity->get('field_advert_couch_rev')->value;
             if (isset($couch_id)) {
-                $couchDbService->updateEntity($normalized, $couch_id, $couch_rev);
+                $result = $couchDbService->updateEntity($normalized, $couch_id, $couch_rev);
+                $entity->set('field_advert_couch_rev', $result[1]);
             } else {
                 $result = $couchDbService->createEntity($normalized);
                 $entity->set('field_advert_couch_id', $result[0]);

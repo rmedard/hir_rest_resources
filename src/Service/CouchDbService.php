@@ -59,16 +59,20 @@ class CouchDbService
      * @param $entityArray
      * @param $id
      * @param $rev
+     * @return array
      */
     public function updateEntity($entityArray, $id, $rev) {
         try {
-            $this->client->putDocument($entityArray, $id, $rev);
+            return $this->client->putDocument($entityArray, $id, $rev);
         } catch (HTTPException $e) {
             if ($e->getCode() == 409) {
                 //TODO Fetch document, merge with new changes and put again
+//                $r = $this->client->findDocument($id);
+//                $r->body
                 Drupal::logger('hir_rest_resources')->error("Update failed: " . $e->getMessage());
             }
             Drupal::logger('hir_rest_resources')->error("Update failed: " . $e->getMessage());
         }
+        return array();
     }
 }
