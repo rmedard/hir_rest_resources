@@ -52,8 +52,6 @@ class NodeEntityNormalizer extends ContentEntityNormalizer
         $attributes['created_iso8601'] = $created_date->format('d-m-Y H:i:s');
         $attributes['link'] = $entity->toUrl()->toString();
 
-
-
         /**
          * Remove unneeded fields eg: 'revision_*'
          */

@@ -9,6 +9,12 @@ services:
     class: Drupal\hir_rest_resources\Normalizer\TypedDataNormalizer
     tags:
       - { name: normalizer, priority: 9 }
+      -
+  hir_rest_resources.entity_reference_normalizer:
+    class: Drupal\hir_rest_resources\Normalizer\EntityReferenceNormalize
+    arguments: ['@entity.manager']
+    tags:
+      - { name: normalizer, priority: 10 }
 
   hir_rest_resources.couchdb_service:
     class: Drupal\hir_rest_resources\Service\CouchDbService
