@@ -10,10 +10,5 @@ services:
     tags:
       - { name: normalizer, priority: 9 }
 
-  hir_rest_resources.entity_reference_normalizer:
-    class: Drupal\hir_rest_resources\Normalizer\EntityReferenceNormalizer
-    tags:
-      - { name: normalizer, priority: 5 }
-
   hir_rest_resources.couchdb_service:
     class: Drupal\hir_rest_resources\Service\CouchDbService

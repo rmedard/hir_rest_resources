@@ -9,7 +9,6 @@
 namespace Drupal\hir_rest_resources\Normalizer;
 
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\node\NodeInterface;
 use Drupal\serialization\Normalizer\ContentEntityNormalizer;
 use Symfony\Component\Serializer\Exception\CircularReferenceException;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
@@ -52,6 +51,8 @@ class NodeEntityNormalizer extends ContentEntityNormalizer
         $attributes['changed_iso8601'] = $changed_date->format('d-m-Y H:i:s');
         $attributes['created_iso8601'] = $created_date->format('d-m-Y H:i:s');
         $attributes['link'] = $entity->toUrl()->toString();
+
+
 
         /**
          * Remove unneeded fields eg: 'revision_*'
