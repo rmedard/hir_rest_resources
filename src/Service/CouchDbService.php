@@ -75,4 +75,12 @@ class CouchDbService
         }
         return array();
     }
+
+    public function deleteEntity($id, $rev) {
+        try {
+            $this->client->deleteDocument($id, $rev);
+        } catch (HTTPException $e) {
+            Drupal::logger('hir_rest_resources')->error("Delete failed: " . $e->getMessage());
+        }
+    }
 }
