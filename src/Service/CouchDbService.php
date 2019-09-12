@@ -43,26 +43,30 @@ class CouchDbService
 
     /**
      * @param $entityArray
-     * @return string couch db identifier|null
+     * @return array couch db identifier|null
      */
     public function createEntity($entityArray) {
         try {
-            // Because couch db id is return at position 0
-            return $this->client->postDocument($entityArray)[0];
+            return $this->client->postDocument($entityArray);
         } catch (HTTPException $e) {
             Drupal::logger('hir_rest_resources')->error("Create failed: " . $e->getMessage());
         }
-        return null;
+        return array();
     }
 
     /**
      * @param $entityArray
      * @param $id
+     * @param $rev
      */
-    public function updateEntity($entityArray, $id) {
+    public function updateEntity($entityArray, $id, $rev) {
         try {
-            $this->client->putDocument($entityArray, $id);
+            $this->client->putDocument($entityArray, $id, $rev);
         } catch (HTTPException $e) {
+            if ($e->getCode() == 409) {
+                //TODO Fetch document, merge with new changes and put again
+                Drupal::logger('hir_rest_resources')->error("Update failed: " . $e->getMessage());
+            }
             Drupal::logger('hir_rest_resources')->error("Update failed: " . $e->getMessage());
         }
     }
