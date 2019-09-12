@@ -38,6 +38,7 @@ class CouchDbService
             }
         }
         unset($normalized['field_advert_couch_id']); // No need to put couch id in the body
+        unset($normalized['field_advert_couch_rev']); // No need to put couch rev in the body
         return $normalized;
     }
 
