@@ -27,6 +27,10 @@ class TypedDataNormalizer extends NormalizerBase
         if (isset($value[0]) && isset($value[0]['value'])) {
             $value = $value[0]['value'];
         }
+
+        if (isset($value[0]) and isset($value[0]['target_id']) and isset($value[0]['width'])){
+            Drupal::logger('some_channel_name')->warning('<pre><code>' . print_r($value, TRUE) . '</code></pre>');
+        }
         return $value;
     }
 }
