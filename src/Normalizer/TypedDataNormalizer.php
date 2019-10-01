@@ -24,15 +24,17 @@ class TypedDataNormalizer extends NormalizerBase
 
     public function normalize($object, $format = NULL, array $context = array())
     {
-        $value = $object->getValue();
-        if (isset($value[0]) && isset($value[0]['value'])) {
-            $value = $value[0]['value'];
+        $values = $object->getValue();
+        if (isset($values[0])) {
+            if (isset($values[0]['value'])) {
+                $values = $values[0]['value'];
+            }
+            if (isset($values[0]['target_id']) and isset($values[0]['width']) and isset($values[0]['height'])) {
+                foreach ($values as $value) {
+                    $value['file_url'] = file_create_url(File::load($value['target_id'])->getFileUri());
+                }
+            }
         }
-
-        if (isset($value[0]) and isset($value[0]['target_id']) and isset($value[0]['width'])) {
-            Drupal::logger('hir_rest_resources')->warning('<pre><code>' . print_r($value, TRUE) . '</code></pre>');
-            $value[0]['file_url'] = file_create_url(File::load($value[0]['target_id'])->getFileUri());
-        }
-        return $value;
+        return $values;
     }
 }
