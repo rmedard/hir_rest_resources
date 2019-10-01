@@ -10,6 +10,7 @@ namespace Drupal\hir_rest_resources\Normalizer;
 
 
 use Drupal;
+use Drupal\file\Entity\File;
 use Drupal\serialization\Normalizer\NormalizerBase;
 
 class TypedDataNormalizer extends NormalizerBase
@@ -28,8 +29,9 @@ class TypedDataNormalizer extends NormalizerBase
             $value = $value[0]['value'];
         }
 
-        if (isset($value[0]) and isset($value[0]['target_id']) and isset($value[0]['width'])){
-            Drupal::logger('some_channel_name')->warning('<pre><code>' . print_r($value, TRUE) . '</code></pre>');
+        if (isset($value[0]) and isset($value[0]['target_id']) and isset($value[0]['width'])) {
+            Drupal::logger('hir_rest_resources')->warning('<pre><code>' . print_r($value, TRUE) . '</code></pre>');
+            $value[0]['file_url'] = file_create_url(File::load($value[0]['target_id'])->getFileUri());
         }
         return $value;
     }
