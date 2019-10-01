@@ -29,6 +29,13 @@ class TypedDataNormalizer extends NormalizerBase
         if ($object instanceof TypedDataInterface) {
             $values = $object->getValue();
             if ($object->getName() === 'field_advert_picture') {
+                Drupal::logger('hir_rest_resources')
+                    ->info("Type: " . $object->getDataDefinition()->getDataType());
+                $data = $object->getValue();
+//                if ($data instanceof Drupal\file\Plugin\Field\FieldType\FileFieldItemList) {
+//                    $data->getValue()
+//
+//                }
                 kint($object);
                 die();
             }
