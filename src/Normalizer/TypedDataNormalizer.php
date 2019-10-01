@@ -34,14 +34,16 @@ class TypedDataNormalizer extends NormalizerBase
                     $values = $values[0]['value'];
                 }
 
-                kint($values);
-                die();
+                if (isset($values[0]['target_id']) and isset($values[0]['width'])) {
+                    kint($values);
+                    die();
 //            if ($values instanceof FileFieldItemList) {
-                Drupal::logger('hir_rest_resources')->info("Item list found...");
-                foreach ($values as $value) {
-                    $value['file_url'] = file_create_url(File::load($value['target_id'])->getFileUri());
-                }
+                    Drupal::logger('hir_rest_resources')->info("Item list found...");
+                    foreach ($values as $value) {
+                        $value['file_url'] = file_create_url(File::load($value['target_id'])->getFileUri());
+                    }
 //            }
+                }
             }
         }
         return $values;
