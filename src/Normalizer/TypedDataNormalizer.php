@@ -28,11 +28,12 @@ class TypedDataNormalizer extends NormalizerBase
     {
         $values = array();
         if ($object instanceof TypedDataInterface) {
+            $values = $object->getValue();
             if (is_array($values) and isset($values[0])) {
                 if (isset($values[0]['value'])) {
                     $values = $values[0]['value'];
                 }
-                $values = $object->getValue();
+
                 kint($values);
                 die();
 //            if ($values instanceof FileFieldItemList) {
