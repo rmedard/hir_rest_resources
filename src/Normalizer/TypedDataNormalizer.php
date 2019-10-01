@@ -11,6 +11,7 @@ namespace Drupal\hir_rest_resources\Normalizer;
 
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\file\Entity\File;
+use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
 use Drupal\serialization\Normalizer\NormalizerBase;
 
 class TypedDataNormalizer extends NormalizerBase
@@ -32,7 +33,7 @@ class TypedDataNormalizer extends NormalizerBase
                     $values = $values[0]['value'];
                 }
                 if ($object->getName() === 'field_advert_picture') {
-                    kint($object);
+                    kint($object->getDataDefinition()->getClass() === FileFieldItemList::class);
                     die();
                     for ($i = 0; $i < count($values); $i++) {
                         $values[$i]['file_url'] = file_create_url(File::load($values[$i]['target_id'])->getFileUri());
