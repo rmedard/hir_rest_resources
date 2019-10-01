@@ -28,19 +28,19 @@ class TypedDataNormalizer extends NormalizerBase
     {
         $values = array();
         if ($object instanceof TypedDataInterface) {
-            $values = $object->getValue();
-            kint($values);
-            die();
+            if (is_array($values) and isset($values[0])) {
+                if (isset($values[0]['value'])) {
+                    $values = $values[0]['value'];
+                }
+                $values = $object->getValue();
+                kint($values);
+                die();
 //            if ($values instanceof FileFieldItemList) {
                 Drupal::logger('hir_rest_resources')->info("Item list found...");
                 foreach ($values as $value) {
                     $value['file_url'] = file_create_url(File::load($value['target_id'])->getFileUri());
                 }
 //            }
-            if (is_array($values) and isset($values[0])) {
-                if (isset($values[0]['value'])) {
-                    $values = $values[0]['value'];
-                }
             }
         }
         return $values;
