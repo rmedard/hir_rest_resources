@@ -33,13 +33,10 @@ class TypedDataNormalizer extends NormalizerBase
                 if (isset($values[0]['value'])) {
                     $values = $values[0]['value'];
                 }
-
                 if ($object->getName() === 'field_advert_picture') {
                     for ($i = 0; $i < count($values); $i++) {
                         $values[$i]['file_url'] = file_create_url(File::load($values[$i]['target_id'])->getFileUri());
                     }
-                    kint($values);
-                    die();
                 }
             }
         }
