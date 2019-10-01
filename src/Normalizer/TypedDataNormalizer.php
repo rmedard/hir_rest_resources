@@ -35,11 +35,9 @@ class TypedDataNormalizer extends NormalizerBase
                 }
 
                 if ($object->getName() === 'field_advert_picture') {
-                    $values[0]['file_url'] = file_create_url(File::load($values[0]['target_id'])->getFileUri());
-                    $values[1]['file_url'] = file_create_url(File::load($values[1]['target_id'])->getFileUri());
-                    $values[2]['file_url'] = file_create_url(File::load($values[2]['target_id'])->getFileUri());
-                    $values[3]['file_url'] = file_create_url(File::load($values[3]['target_id'])->getFileUri());
-                    $values[4]['file_url'] = file_create_url(File::load($values[4]['target_id'])->getFileUri());
+                    for ($i = 0; $i < count($values); $i++) {
+                        $values[$i]['file_url'] = file_create_url(File::load($values[$i]['target_id'])->getFileUri());
+                    }
                     kint($values);
                     die();
                 }
