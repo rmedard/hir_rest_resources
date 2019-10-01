@@ -29,6 +29,8 @@ class TypedDataNormalizer extends NormalizerBase
         $values = array();
         if ($object instanceof TypedDataInterface) {
             $values = $object->getValue();
+            kint($values);
+            die();
 //            if ($values instanceof FileFieldItemList) {
                 Drupal::logger('hir_rest_resources')->info("Item list found...");
                 foreach ($values as $value) {
