@@ -28,8 +28,10 @@ class TypedDataNormalizer extends NormalizerBase
         $values = array();
         if ($object instanceof TypedDataInterface) {
             $values = $object->getValue();
-            kint($object);
-            die();
+            if ($object->getName() === 'field_advert_picture') {
+                kint($object);
+                die();
+            }
             if (is_array($values) and isset($values[0])) {
                 if (isset($values[0]['value'])) {
                     $values = $values[0]['value'];
