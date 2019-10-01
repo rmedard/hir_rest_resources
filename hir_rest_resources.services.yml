@@ -10,3 +10,6 @@ services:
       - { name: normalizer, priority: 9 }
   hir_rest_resources.couchdb_service:
     class: Drupal\hir_rest_resources\Service\CouchDbService
+  hir_rest_resources.data_access_service:
+    class: Drupal\hir_rest_resources\Service\DataAccessService
+    arguments: ['@entity_type.manager']

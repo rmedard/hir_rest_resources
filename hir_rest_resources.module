@@ -5,6 +5,7 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityStorageException;
 use Drupal\node\NodeInterface;
 
 /**
@@ -39,6 +40,31 @@ function hir_rest_resources_entity_presave(EntityInterface $entity)
                 $couchDbService->deleteEntity($couch_id, $couch_rev);
                 $entity->set('field_advert_couch_id', null);
                 $entity->set('field_advert_couch_rev', null);
+            }
+        }
+    }
+}
+
+/**
+ * Implements hook_install().
+ */
+function hir_rest_resources_install()
+{
+    $dataAccessService = Drupal::service('hir_rest_resources.data_access_service');
+    $adverts = $dataAccessService->loadPublishedNodes();
+    if (!empty($adverts)) {
+        $couchDbService = Drupal::service('hir_rest_resources.couchdb_service');
+        foreach ($adverts as $advert) {
+            $normalized = $couchDbService->normalizeEntity($advert);
+            if ($advert instanceof NodeInterface) {
+                $result = $couchDbService->createEntity($normalized);
+                $advert->set('field_advert_couch_id', $result[0]);
+                $advert->set('field_advert_couch_rev', $result[1]);
+                try {
+                    $advert->save();
+                } catch (EntityStorageException $e) {
+                    Drupal::logger('hir_rest_resources')->error('Storage failed: ' . $e->getMessage());
+                }
             }
         }
     }

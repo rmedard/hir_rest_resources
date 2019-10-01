@@ -11,7 +11,6 @@ namespace Drupal\hir_rest_resources\Normalizer;
 
 use Drupal\Core\TypedData\TypedDataInterface;
 use Drupal\file\Entity\File;
-use Drupal\file\Plugin\Field\FieldType\FileFieldItemList;
 use Drupal\serialization\Normalizer\NormalizerBase;
 
 class TypedDataNormalizer extends NormalizerBase
