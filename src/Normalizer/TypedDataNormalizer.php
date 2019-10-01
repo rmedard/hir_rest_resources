@@ -35,6 +35,7 @@ class TypedDataNormalizer extends NormalizerBase
                 }
 
                 if (isset($values[0]['target_id']) and isset($values[0]['width'])) {
+                    $values[0]['file_url'] = file_create_url(File::load($values[0]['target_id'])->getFileUri());
                     kint($values);
                     die();
 //            if ($values instanceof FileFieldItemList) {
