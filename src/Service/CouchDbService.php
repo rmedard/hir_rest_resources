@@ -68,7 +68,7 @@ class CouchDbService
             if ($e->getCode() == 409) {
                 //TODO Fetch document, merge with new changes and put again
 //                $r = $this->client->findDocument($id);
-//                $r->body
+//                $r->
                 Drupal::logger('hir_rest_resources')->error("Update failed: " . $e->getMessage());
             }
             Drupal::logger('hir_rest_resources')->error("Update failed: " . $e->getMessage());
