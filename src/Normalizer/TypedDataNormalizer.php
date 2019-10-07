@@ -34,7 +34,7 @@ class TypedDataNormalizer extends NormalizerBase
                 }
                 if ($object->getName() === 'field_advert_picture') {
                     for ($i = 0; $i < count($values); $i++) {
-                        $values[$i]['file_url'] = Url::fromUri(File::load($values[$i]['target_id'])->getFileUri());
+                        $values[$i]['file_url'] = Url::fromUri(file_create_url(File::load($values[$i]['target_id'])->getFileUri()))->toString();
                     }
                 }
             }
