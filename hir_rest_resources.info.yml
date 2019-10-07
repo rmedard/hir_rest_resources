@@ -4,3 +4,6 @@ description: 'Manage Hir Rest resources'
 package: Hir Custom Modules
 core: 8.x
 version: '8.x-1.0'
+
+dependencies:
+  - rules:rules
