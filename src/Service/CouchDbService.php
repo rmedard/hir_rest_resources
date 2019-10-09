@@ -52,7 +52,7 @@ class CouchDbService
             $picture = Drupal\file\Entity\File::load(17444);
             $url = 'http://www.hir-dev.ml/sites/default/files/2019-02/1kagugu-plot-plut-properties-3.jpg';
             $attachment = Attachment::createFromBase64Data(base64_encode(file_get_contents($url)), 'image/jpeg');
-            $entityArray['attachments'] = array('firstImage.jpg' => $attachment);
+            $entityArray['_attachments'] = array('firstImage.jpg' => $attachment);
             return $this->client->postDocument($entityArray);
         } catch (HTTPException $e) {
             Drupal::logger('hir_rest_resources')->error("Create failed: " . $e->getMessage());
