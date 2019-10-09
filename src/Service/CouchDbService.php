@@ -4,6 +4,7 @@
 namespace Drupal\hir_rest_resources\Service;
 
 
+use Doctrine\CouchDB\Attachment;
 use Doctrine\CouchDB\CouchDBClient;
 use Doctrine\CouchDB\HTTP\HTTPException;
 use Drupal;
@@ -48,6 +49,9 @@ class CouchDbService
      */
     public function createEntity($entityArray) {
         try {
+            $picture = Drupal\file\Entity\File::load(17444);
+            $attachment = Attachment::createFromBase64Data(base64_encode($picture), 'image/jpeg');
+            $entityArray['attachments'] = array('firstImage.jpg' => $attachment);
             return $this->client->postDocument($entityArray);
         } catch (HTTPException $e) {
             Drupal::logger('hir_rest_resources')->error("Create failed: " . $e->getMessage());
