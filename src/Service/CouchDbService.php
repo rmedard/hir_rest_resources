@@ -57,7 +57,7 @@ class CouchDbService
             $entityArray['_attachments']['R1A_0.jpg'] = $attachment;
             return $this->client->postDocument($entityArray);
         } catch (HTTPException $e) {
-            Drupal::logger('hir_rest_resources')->error("Create failed: " . json_encode($e));
+            Drupal::logger('hir_rest_resources')->error(json_encode($e));
         }
         return array();
     }
