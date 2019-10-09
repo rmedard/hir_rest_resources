@@ -51,10 +51,10 @@ class CouchDbService
         try {
             $picture = Drupal\file\Entity\File::load(17444);
 
-            $url = 'sites/default/files/2019-02/1kagugu-plot-plut-properties-3.jpg';
+            $url = 'http://www.hir-dev.ml/sites/default/files/2019-01/R1A_0.jpg';
             $attachment = Attachment::createFromBinaryData(fopen($picture->getFileUri(), 'r'), 'image/jpeg');
             Drupal::logger('hir_rest_resources')->info('File location: ' . $picture->getFileUri());
-            $entityArray['_attachments']['1kagugu-plot-plut-properties-3.jpg'] = $attachment;
+            $entityArray['_attachments']['R1A_0.jpg'] = $attachment;
             return $this->client->postDocument($entityArray);
         } catch (HTTPException $e) {
             Drupal::logger('hir_rest_resources')->error("Create failed: " . $e->getMessage());
